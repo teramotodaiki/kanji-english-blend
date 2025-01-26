@@ -5,11 +5,11 @@
       "forbidden_chars": ["あ-ん", "ア-ン"],
       "required_elements": ["kanji", "basic_english"],
       "scoring": {
-        "threshold": 0.7,
+        "threshold": 0.4,
         "points": {
-          "required_kanji": 1,
+          "required_kanji": 2,
           "required_english": 1,
-          "forbidden_chars": -5
+          "forbidden_chars": -3
         }
       }
     }

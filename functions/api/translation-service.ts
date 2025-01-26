@@ -37,6 +37,21 @@ CRITICAL CHARACTER RESTRICTIONS:
    ✗ NO Japanese punctuation (、。） - Use Western punctuation
    ✗ NO other special characters
 
+3. ADJECTIVE HANDLING (STRICT):
+   - ALL adjectives MUST be in English
+   - Examples:
+     * "新しい" → "new"
+     * "難しい" → "difficult"
+     * "良い/いい" → "good"
+     * "高い" → "high"/"tall"/"expensive"
+     * "低い" → "low"
+     * "早い" → "early"
+     * "遅い" → "late"
+     * "暑い" → "hot"
+     * "寒い" → "cold"
+     * "簡単" → "simple"/"easy"
+     * "複雑" → "complex"
+
 TRANSLATION RULES:
 
 1. MANDATORY KANJI USAGE:
