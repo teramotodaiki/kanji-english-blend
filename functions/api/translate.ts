@@ -31,7 +31,9 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
   try {
     console.log('Function environment check:', {
       hasApiKey: !!env.DEEPSEEK_API_KEY,
-      keyLength: env.DEEPSEEK_API_KEY?.length || 0
+      keyLength: env.DEEPSEEK_API_KEY?.length || 0,
+      keyFormat: env.DEEPSEEK_API_KEY?.startsWith('sk-') || false,
+      keyPrefix: env.DEEPSEEK_API_KEY?.substring(0, 10) + '...' || 'undefined'
     });
 
     if (request.method !== 'POST') {
