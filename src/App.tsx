@@ -49,7 +49,8 @@ function App() {
       setOutput(cleanedOutput);
     } catch (error) {
       console.error('Translation error:', error);
-      setOutput('Error occurred during translation. Please try again.');
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      setOutput(`Error: ${errorMessage}`);
     } finally {
       setIsLoading(false);
     }
