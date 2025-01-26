@@ -1,0 +1,73 @@
+{
+  "metadata": {
+    "version": "1.1.0",
+    "rules": {
+      "forbidden_chars": ["あ-ん", "ア-ン"],
+      "required_elements": ["kanji", "basic_english"],
+      "scoring": {
+        "threshold": 0.7,
+        "points": {
+          "required_kanji": 1,
+          "required_english": 1,
+          "forbidden_chars": -5
+        }
+      }
+    }
+  },
+  "test_cases": [
+    {
+      "description": "Basic greeting and status",
+      "input": "こんにちは。今日は仕事をして疲れました。人が少ない。",
+      "expected_patterns": ["挨拶", "今日", "仕事", "人間"],
+      "required_english_patterns": ["tired", "few"]
+    },
+    {
+      "description": "Food and taste description",
+      "input": "ご飯を食べました。とても美味しかったです。",
+      "expected_patterns": ["食事"],
+      "required_english_patterns": ["very", "delicious", "finished"]
+    },
+    {
+      "description": "Environment description",
+      "input": "人が少ないです。でも静かで良いです。",
+      "expected_patterns": ["人間", "静寂"],
+      "required_english_patterns": ["few", "but", "good"]
+    },
+    {
+      "description": "Complex sentence with multiple concepts",
+      "input": "私は日本語と中国語を勉強しています。文法が難しいです。",
+      "expected_patterns": ["日本語", "中国語", "学習", "文法"],
+      "required_english_patterns": ["difficult"]
+    },
+    {
+      "description": "Weather and feeling",
+      "input": "今日は暑くて、頭が痛いです。水を飲みたいです。",
+      "expected_patterns": ["今日", "頭痛", "水"],
+      "required_english_patterns": ["hot", "want"]
+    },
+    {
+      "description": "Time and schedule",
+      "input": "明日は早く起きて、会社に行きます。",
+      "expected_patterns": ["明日", "早朝", "会社"],
+      "required_english_patterns": ["go", "to"]
+    },
+    {
+      "description": "Chinese-Japanese blend style",
+      "input": "私は中国語と日本語を勉強して、両方の文法を比較しています。",
+      "expected_patterns": ["中国語", "日本語", "学習", "文法"],
+      "required_english_patterns": ["and", "compare"]
+    },
+    {
+      "description": "Complex grammar with multiple clauses",
+      "input": "新しい言語を学ぶことは難しいですが、毎日練習すれば上手くなれます。",
+      "expected_patterns": ["学習", "毎日", "上達"],
+      "required_english_patterns": ["difficult", "but", "practice"]
+    },
+    {
+      "description": "Mixed language communication",
+      "input": "日本人と中国人が簡単な英語と漢字で交流できます。",
+      "expected_patterns": ["日本人", "中国人", "簡単", "英語", "漢字", "交流", "可能"],
+      "required_english_patterns": ["and", "with"]
+    }
+  ]
+}
