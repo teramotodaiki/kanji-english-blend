@@ -3,6 +3,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ShareButtons } from "@/components/share/ShareButtons"
+import { SampleTexts } from "@/components/sample/SampleTexts"
+import { CopyButton } from "@/components/output/CopyButton"
 import { trackEvent } from "@/lib/analytics"
 function App() {
   const [input, setInput] = useState('')
@@ -78,6 +80,7 @@ function App() {
 我学中文 And 我見 many 本 in 中国 and 日本...</p>
         </CardHeader>
         <CardContent className="space-y-6 p-6">
+          <SampleTexts onSelect={setInput} />
           <Textarea
             placeholder="Enter your text here..."
             value={input}
@@ -93,15 +96,20 @@ function App() {
           </Button>
           {output && (
             <>
-              <Textarea
-                value={output}
-                readOnly
-                className="min-h-[100px] dark:bg-gray-700 dark:text-gray-100"
-              />
-              <ShareButtons
-                text={`${output}\n\nCreated with 漢字-English Blend ✨\nTry it yourself: ${window.location.href}\n#漢字English #KanjiEnglish`}
-                url={window.location.href}
-              />
+              <div className="space-y-2">
+                <Textarea
+                  value={output}
+                  readOnly
+                  className="min-h-[100px] dark:bg-gray-700 dark:text-gray-100"
+                />
+                <div className="flex gap-2 items-center">
+                  <CopyButton text={output} />
+                      <ShareButtons
+                    text={`${output}\n\nCreated with 漢字-English Blend ✨\nTry it yourself: ${window.location.href}\n#漢字English #KanjiEnglish`}
+                    url={window.location.href}
+                  />
+                </div>
+              </div>
             </>
           )}
         </CardContent>
