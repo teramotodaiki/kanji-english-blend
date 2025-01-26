@@ -3,6 +3,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ShareButtons } from "@/components/share/ShareButtons"
+import { TodaysBlend } from "@/components/today/TodaysBlend"
 import { trackEvent } from "@/lib/analytics"
 function App() {
   const [input, setInput] = useState('')
@@ -70,8 +71,10 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 py-8 px-4">
-      <Card className="max-w-2xl mx-auto shadow-lg dark:bg-gray-800">
-        <CardHeader className="space-y-2">
+      <div className="max-w-2xl mx-auto">
+        <TodaysBlend />
+        <Card className="shadow-lg dark:bg-gray-800">
+          <CardHeader className="space-y-2">
           <CardTitle className="text-2xl font-bold dark:text-white">漢字-English Blend</CardTitle>
           <CardDescription className="text-base dark:text-gray-200">Enter text in Japanese, English, or Chinese to create a kanji-English mixed version</CardDescription>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Example output:
