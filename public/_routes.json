@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": [],
+  "headers": {
+    "/*.js": {
+      "content-type": "text/javascript; charset=utf-8"
+    },
+    "/*.css": {
+      "content-type": "text/css; charset=utf-8"
+    },
+    "/*.html": {
+      "content-type": "text/html; charset=utf-8"
+    }
+  }
+}
