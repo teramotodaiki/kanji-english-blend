@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { translateText } from '../functions/api/translation-service';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -29,6 +30,13 @@ async function runTests() {
     readFileSync(join(__dirname, 'translation-test-cases.json'), 'utf-8')
   );
 
+  // Load API key from environment
+  const apiKey = process.env.DEEPSEEK_API_KEY;
+  if (!apiKey) {
+    console.error('❌ DEEPSEEK_API_KEY environment variable is not set');
+    process.exit(1);
+  }
+
   console.log('Starting translation tests...\n');
   let passCount = 0;
   let failCount = 0;
@@ -38,16 +46,7 @@ async function runTests() {
     console.log(`Input: ${testCase.input}`);
 
     try {
-      const response = await fetch('http://localhost:8788/api/translate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.DEEPSEEK_API_KEY || ''}`,
-        },
-        body: JSON.stringify({ text: testCase.input }),
-      });
-
-      const result = await response.json();
+      const result = await translateText(testCase.input, apiKey);
       
       if (result.error) {
         console.log(`❌ Error: ${result.error}`);
@@ -90,7 +89,7 @@ async function runTests() {
         failCount++;
       }
     } catch (error) {
-      console.log(`❌ Error: ${error.message}`);
+      console.log(`❌ Error: ${error instanceof Error ? error.message : String(error)}`);
       failCount++;
     }
 
@@ -101,6 +100,13 @@ async function runTests() {
   console.log(`Total: ${testSuite.test_cases.length}`);
   console.log(`Passed: ${passCount}`);
   console.log(`Failed: ${failCount}`);
+
+  if (failCount > 0) {
+    process.exit(1);
+  }
 }
 
-runTests().catch(console.error);
+runTests().catch(error => {
+  console.error('Test runner error:', error);
+  process.exit(1);
+});
