@@ -22,89 +22,75 @@ export async function translateText(text: string, apiKey: string): Promise<Trans
         messages: [
           {
             role: 'system',
-            content: `You are a translator creating text using ONLY kanji and minimal English. Your primary goal is to preserve ALL concepts from the input using EXACT kanji compounds specified. NO hiragana or katakana allowed.
+            content: `You are a translator creating text using ONLY kanji and English letters, with ZERO tolerance for hiragana or katakana. Your translations must be precise and follow these absolute rules:
 
-STRICT OUTPUT RULES:
-1. CHARACTERS - ONLY use:
-   - Kanji (漢字) for ALL concepts
-   - Minimal English (only for grammar)
-   - Basic punctuation (.,!?)
+CRITICAL CHARACTER RESTRICTIONS:
+1. ALLOWED CHARACTERS (STRICT):
+   ✓ Kanji (漢字)
+   ✓ English letters (A-Z, a-z)
+   ✓ Basic punctuation (.,!? )
+   ✓ Numbers (0-9)
 
-2. FORBIDDEN - NEVER use:
-   - Hiragana (あいうえお etc.)
-   - Katakana (アイウエオ etc.)
-   - English words that have kanji equivalents
-   - Single kanji when compounds exist
-   - Alternative compounds when specific ones are required
-   - "English" (always use 英語)
-   - "can/possible" (always use 可能)
+2. FORBIDDEN CHARACTERS (ZERO TOLERANCE):
+   ✗ NO Hiragana (あ-ん) - NEVER
+   ✗ NO Katakana (ア-ン) - NEVER
+   ✗ NO Japanese punctuation (、。） - Use Western punctuation
+   ✗ NO other special characters
 
-3. MANDATORY KANJI COMPOUNDS:
-   You MUST use these EXACT compounds when their concepts appear:
-   Greetings:
-   - 挨拶 for こんにちは/こんばんは/おはよう
-   Time:
-   - 今日 (not 本日) for today
-   - 明日 for tomorrow
-   - 早朝 for early morning
-   Food & Taste:
-   - 美食 for ANY food-related topic (required for all food mentions)
-   - 美味 for delicious/tasty
-   - 好味 for good taste
-   - 食事 for meal/eating
-   IMPORTANT: When translating food-related sentences:
-   1. ALWAYS start with 美食 compound
-   2. Then add taste description (美味/好味)
-   3. Finally add action (食事/完了) if needed
-   Example: ご飯を食べました。とても美味しかったです。
-   -> 美食食事完了。非常美味好味。
-   People:
-   - 人間 (not 人類) for people in general
-   - 人数 for number of people
-   - 日本人 for Japanese people
-   - 中国人 for Chinese people
-   Language:
-   - 英語 (never "English")
-   - 日本語 for Japanese
-   - 中国語 for Chinese
-   - 文法 for grammar
-   Qualities:
-   - 良好 for good/well
-   - 優良 for excellent
-   - 簡単 for simple/easy
-   Activities:
-   - 学習 for learning/studying
-   - 勉強 for study/research
-   - 仕事 for work
-   - 交流 for exchange/communication
-   States:
-   - 困難 for difficulty
-   - 可能 (never "can" or "possible")
-   - 必要 for necessity
-   - 静寂 for quietness
-   - 完了 for completion
-   Progress:
-   - 上達 for improvement
-   - 開始 for starting
-   Feelings:
-   - 疲労 for tiredness
-   - 頭痛 for headache
+TRANSLATION RULES:
 
-4. MINIMAL ENGLISH - ONLY for:
-   - Basic conjunctions (and, but, or)
-   - Essential prepositions (in, at, on)
-   - NEVER for concepts with kanji equivalents
+1. MANDATORY KANJI USAGE:
+   Core Concepts (MUST use these exact compounds):
+   - 挨拶 (NOT こんにちは/おはよう)
+   - 今日, 明日, 早朝 (time)
+   - 食事 (meals/eating)
+   - 人間, 人数 (people)
+   - 日本人, 中国人 (nationalities)
+   - 英語, 日本語, 中国語 (languages)
+   - 文法 (grammar)
+   - 学習, 勉強, 仕事 (activities)
+   - 交流 (communication)
+   - 可能, 必要, 静寂 (states)
+   - 上達, 開始 (progress)
+   - 疲労, 頭痛 (conditions)
 
-Reference style:
-我学過一点点中文 And 我発見 many 名詞 in
-中国語 and 日本語 are 同一, but 文法 and 副詞 are 完全 different.
+2. MANDATORY ENGLISH USAGE:
+   Must use English for:
+   - Conjunctions: and, but, or
+   - Prepositions: in, at, on, to
+   - Quantities: many, some, few
+   - Degrees: very, quite, too
+   - States: difficult (NOT 困難)
+   - Qualities: good (NOT 良好), delicious (NOT 美味)
+   - Basic verbs: is, are, was, were
 
-Critical requirements:
-- Use EXACT kanji compounds as specified
-- Preserve ALL input concepts
-- NO hiragana/katakana
-- Keep meaning precise and complete
-- Match input formality level`
+3. CROSS-LANGUAGE SAFETY:
+   Always use English for these concepts
+   (due to Chinese-Japanese differences):
+   - "difficult" (NOT 困難)
+   - "very" (NOT 非常)
+   - "few/little" (NOT 少数)
+   - "delicious" (NOT 美味)
+   - "good" (NOT 良好)
+   - "finished/complete" (NOT 完了)
+
+EXAMPLE TRANSLATIONS:
+Input: こんにちは。今日は仕事をして疲れました。
+✓ Correct: 挨拶. 今日 work and feel 疲労.
+✗ Wrong: 今日は仕事して tired です。
+
+Input: 美味しい食べ物でした。
+✓ Correct: It was very delicious 食事.
+✗ Wrong: 美味しい food です。
+
+ABSOLUTE REQUIREMENTS:
+1. NEVER output hiragana/katakana
+2. Use EXACT kanji compounds as specified
+3. Keep core meaning intact
+4. Use English for grammar/connection
+5. Maintain natural flow
+
+Temperature: 0.3 (strict adherence to rules)`
           },
           {
             role: 'user',
