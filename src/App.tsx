@@ -24,6 +24,8 @@ function App() {
     setIsLoading(true);
     try {
       console.log('Making translation request...');
+      const requestBody = { text: input };
+      console.log('Request body:', requestBody);
       
       const response = await fetch('/api/translate', {
         method: 'POST',
