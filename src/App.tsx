@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ShareButtons } from "@/components/share/ShareButtons"
 import { SampleTexts } from "@/components/sample/SampleTexts"
 import { CopyButton } from "@/components/output/CopyButton"
@@ -75,9 +75,13 @@ function App() {
       <Card className="max-w-2xl mx-auto shadow-lg dark:bg-gray-800">
         <CardHeader className="space-y-2">
           <CardTitle className="text-2xl font-bold dark:text-white">漢字-English Blend</CardTitle>
-          <CardDescription className="text-base dark:text-gray-200">Enter text in Japanese, English, or Chinese to create a kanji-English mixed version</CardDescription>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Example output:
-我学中文 And 我見 many 本 in 中国 and 日本...</p>
+          <div className="flex items-center justify-center space-x-4 text-base dark:text-gray-200">
+            <span>🇯🇵</span>
+            <span>➡️</span>
+            <span>🇯🇵🇺🇸</span>
+            <span>⬅️</span>
+            <span>🇨🇳</span>
+          </div>
         </CardHeader>
         <CardContent className="space-y-6 p-6">
           <SampleTexts onSelect={setInput} />
@@ -87,13 +91,29 @@ function App() {
             onChange={(e) => setInput(e.target.value)}
             className="min-h-[100px] dark:bg-gray-700 dark:text-gray-100"
           />
-          <Button 
-            onClick={handleTranslate}
-            disabled={isLoading || !input}
-            className="w-full dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
-          >
-            {isLoading ? 'Translating...' : 'Translate'}
-          </Button>
+          <div className="space-y-2">
+            <ul className="flex justify-center space-x-6 text-sm text-gray-500 dark:text-gray-400">
+              <li className="flex items-center space-x-1">
+                <span>➊</span>
+                <span>入力して</span>
+              </li>
+              <li className="flex items-center space-x-1">
+                <span>➋</span>
+                <span>翻訳</span>
+              </li>
+              <li className="flex items-center space-x-1">
+                <span>➌</span>
+                <span>シェア</span>
+              </li>
+            </ul>
+            <Button 
+              onClick={handleTranslate}
+              disabled={isLoading || !input}
+              className="w-full dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
+            >
+              {isLoading ? 'Translating...' : 'Translate'}
+            </Button>
+          </div>
           {output && (
             <>
               <div className="space-y-2">
@@ -114,8 +134,10 @@ function App() {
           )}
         </CardContent>
         <div className="text-center p-4 text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700">
-          <p className="mb-2">Mix 漢字 and English to create 文章 that both 中国人 and 日本人 can read with 中学生 level English</p>
-          <p className="mb-4">Create text that combines Chinese characters and English words, making it readable for both Chinese and Japanese speakers with basic English skills</p>
+          <div className="flex items-center justify-center space-x-2 mb-4">
+            <span>🔄</span>
+            <span className="text-sm">Try the samples above!</span>
+          </div>
           <p>© 2024 @teramotodaiki and Devin</p>
         </div>
       </Card>
