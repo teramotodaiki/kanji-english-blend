@@ -1,8 +1,15 @@
-/*
+/*.html
   Content-Type: text/html; charset=utf-8
 
 /*.js
   Content-Type: text/javascript; charset=utf-8
+  X-Content-Type-Options: nosniff
 
 /*.css
   Content-Type: text/css; charset=utf-8
+  X-Content-Type-Options: nosniff
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
