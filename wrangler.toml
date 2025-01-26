@@ -1,0 +1,27 @@
+name = "kanji-english-blend"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Build settings for Pages
+[build]
+command = "npm run build"
+output_dir = "dist"
+
+# Pages configuration
+[site]
+bucket = "./dist"
+
+[functions]
+directory = "functions"
+
+# Environment variables will be set in Cloudflare dashboard
+[vars]
+# DEEPSEEK_API_KEY = ""
+
+# Development environment
+[env.development]
+name = "kanji-english-blend-dev"
+
+# Production environment
+[env.production]
+name = "kanji-english-blend"
