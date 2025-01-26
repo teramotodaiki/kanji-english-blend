@@ -75,45 +75,46 @@ function App() {
         <TodaysBlend />
         <Card className="shadow-lg dark:bg-gray-800">
           <CardHeader className="space-y-2">
-          <CardTitle className="text-2xl font-bold dark:text-white">漢字-English Blend</CardTitle>
-          <CardDescription className="text-base dark:text-gray-200">Enter text in Japanese, English, or Chinese to create a kanji-English mixed version</CardDescription>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Example output:
+            <CardTitle className="text-2xl font-bold dark:text-white">漢字-English Blend</CardTitle>
+            <CardDescription className="text-base dark:text-gray-200">Enter text in Japanese, English, or Chinese to create a kanji-English mixed version</CardDescription>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Example output:
 我学中文 And 我見 many 本 in 中国 and 日本...</p>
-        </CardHeader>
-        <CardContent className="space-y-6 p-6">
-          <Textarea
-            placeholder="Enter your text here..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="min-h-[100px] dark:bg-gray-700 dark:text-gray-100"
-          />
-          <Button 
-            onClick={handleTranslate}
-            disabled={isLoading || !input}
-            className="w-full dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
-          >
-            {isLoading ? 'Translating...' : 'Translate'}
-          </Button>
-          {output && (
-            <>
-              <Textarea
-                value={output}
-                readOnly
-                className="min-h-[100px] dark:bg-gray-700 dark:text-gray-100"
-              />
-              <ShareButtons
-                text={`${output}\n\nCreated with 漢字-English Blend ✨\nTry it yourself: ${window.location.href}\n#漢字English #KanjiEnglish`}
-                url={window.location.href}
-              />
-            </>
-          )}
-        </CardContent>
-        <div className="text-center p-4 text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700">
-          <p className="mb-2">Mix 漢字 and English to create 文章 that both 中国人 and 日本人 can read with 中学生 level English</p>
-          <p className="mb-4">Create text that combines Chinese characters and English words, making it readable for both Chinese and Japanese speakers with basic English skills</p>
-          <p>© 2024 @teramotodaiki and Devin</p>
-        </div>
-      </Card>
+          </CardHeader>
+          <CardContent className="space-y-6 p-6">
+            <Textarea
+              placeholder="Enter your text here..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className="min-h-[100px] dark:bg-gray-700 dark:text-gray-100"
+            />
+            <Button 
+              onClick={handleTranslate}
+              disabled={isLoading || !input}
+              className="w-full dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
+            >
+              {isLoading ? 'Translating...' : 'Translate'}
+            </Button>
+            {output && (
+              <>
+                <Textarea
+                  value={output}
+                  readOnly
+                  className="min-h-[100px] dark:bg-gray-700 dark:text-gray-100"
+                />
+                <ShareButtons
+                  text={`${output}\n\nCreated with 漢字-English Blend ✨\nTry it yourself: ${window.location.href}\n#漢字English #KanjiEnglish`}
+                  url={window.location.href}
+                />
+              </>
+            )}
+          </CardContent>
+          <div className="text-center p-4 text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700">
+            <p className="mb-2">Mix 漢字 and English to create 文章 that both 中国人 and 日本人 can read with 中学生 level English</p>
+            <p className="mb-4">Create text that combines Chinese characters and English words, making it readable for both Chinese and Japanese speakers with basic English skills</p>
+            <p>© 2024 @teramotodaiki and Devin</p>
+          </div>
+        </Card>
+      </div>
     </div>
   )
 }
