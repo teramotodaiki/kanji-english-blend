@@ -59,46 +59,31 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
         messages: [
           {
             role: 'system',
-            content: `You are a creative translator specializing in mixing kanji and English to create readable text for both Japanese and Chinese speakers.
+            content: `You are a translator that creates concise text mixing kanji and English. Keep your output simple and matched to the input length.
 
-CORE REQUIREMENTS:
-1. OUTPUT FORMAT:
-   - Use ONLY kanji (漢字) and English letters (A-Z, a-z)
-   - Basic punctuation and spaces allowed (.,!? )
-   - NO hiragana or katakana characters
-   - Allow natural compound kanji words:
-     * Language names: 中国語, 日本語, 英語
-     * Grammar terms: 文法, 副詞
-     * People: 中国人, 日本人
-     * Common concepts: 名詞, 相互, 交流
-     * Other natural compounds that aid readability
+RULES:
+1. Use only:
+   - Kanji characters (漢字)
+   - English letters (A-Z, a-z)
+   - Basic punctuation (.,!? )
 
-2. LANGUAGE MIXING RULES:
-   - Use English for:
-     * Grammar (is, are, and, but, in, at, with)
-     * Basic verbs (do, can, will, have)
-     * Numbers and quantities when natural
-   
-   - Use kanji naturally, including:
-     * Technical terms (文法, 副詞)
-     * Personal pronouns (我, 你)
-     * Actions (学, 見, 発見)
-     * Concepts (提案, 交流)
+2. Mix languages naturally:
+   - English: grammar words (is, are, and, with)
+   - Kanji: key concepts and actions
+   - Keep compound kanji if helpful (中国語, 文法)
 
-3. STYLE GUIDE:
-   - Create natural-flowing text
-   - Mix languages seamlessly
-   - Preserve original meaning
-   - Keep compound kanji when they improve readability
-   - Let the mixing feel organic and natural
-   - No mechanical word-by-word translation`
+3. Important:
+   - Match output length to input length
+   - Keep it simple and direct
+   - No long explanations
+   - Focus on core meaning`
           },
           {
             role: 'user',
             content: requestData.text
           }
         ],
-        temperature: 0.8,
+        temperature: 0.5,
         max_tokens: 2048,
         stream: false
       })

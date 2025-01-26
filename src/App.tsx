@@ -30,7 +30,8 @@ function App() {
       const response = await fetch('/api/translate', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify({ text: input })
       });
@@ -65,12 +66,12 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8 px-4">
-      <Card className="max-w-2xl mx-auto shadow-lg">
+    <div className="min-h-screen bg-white dark:bg-gray-900 py-8 px-4">
+      <Card className="max-w-2xl mx-auto shadow-lg dark:bg-gray-800">
         <CardHeader className="space-y-2">
-          <CardTitle className="text-2xl font-bold">漢字-English Blend</CardTitle>
-          <CardDescription className="text-base">Enter text in Japanese, English, or Chinese to create a kanji-English mixed version</CardDescription>
-          <p className="text-sm text-gray-500 mt-2">Example output:
+          <CardTitle className="text-2xl font-bold dark:text-white">漢字-English Blend</CardTitle>
+          <CardDescription className="text-base dark:text-gray-200">Enter text in Japanese, English, or Chinese to create a kanji-English mixed version</CardDescription>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Example output:
 我学中文 And 我見 many 本 in 中国 and 日本...</p>
         </CardHeader>
         <CardContent className="space-y-6 p-6">
@@ -78,12 +79,12 @@ function App() {
             placeholder="Enter your text here..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="min-h-[100px]"
+            className="min-h-[100px] dark:bg-gray-700 dark:text-gray-100"
           />
           <Button 
             onClick={handleTranslate}
             disabled={isLoading || !input}
-            className="w-full"
+            className="w-full dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
           >
             {isLoading ? 'Translating...' : 'Translate'}
           </Button>
@@ -91,7 +92,7 @@ function App() {
             <Textarea
               value={output}
               readOnly
-              className="min-h-[100px]"
+              className="min-h-[100px] dark:bg-gray-700 dark:text-gray-100"
             />
           )}
         </CardContent>
