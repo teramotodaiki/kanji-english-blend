@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": [],
+  "routes": {
+    "/*.js": {
+      "headers": {
+        "content-type": "text/javascript; charset=utf-8"
+      }
+    },
+    "/*.css": {
+      "headers": {
+        "content-type": "text/css; charset=utf-8"
+      }
+    },
+    "/*.html": {
+      "headers": {
+        "content-type": "text/html; charset=utf-8"
+      }
+    }
+  }
+}
