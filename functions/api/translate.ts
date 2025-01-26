@@ -29,6 +29,11 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
   }
 
   try {
+    console.log('Function environment check:', {
+      hasApiKey: !!env.DEEPSEEK_API_KEY,
+      keyLength: env.DEEPSEEK_API_KEY?.length || 0
+    });
+
     if (request.method !== 'POST') {
       return new Response('Method not allowed', { status: 405 })
     }
