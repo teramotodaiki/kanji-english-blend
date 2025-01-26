@@ -99,7 +99,7 @@ function App() {
                 className="min-h-[100px] dark:bg-gray-700 dark:text-gray-100"
               />
               <ShareButtons
-                text={`${output}\n\nCreated with 漢字-English Blend ✨\n#漢字English #KanjiEnglish`}
+                text={`${output}\n\nCreated with 漢字-English Blend ✨\nTry it yourself: ${window.location.href}\n#漢字English #KanjiEnglish`}
                 url={window.location.href}
               />
             </>
