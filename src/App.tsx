@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { ShareButtons } from "@/components/share/ShareButtons"
+import { trackEvent } from "@/lib/analytics"
 function App() {
   const [input, setInput] = useState('')
   const [output, setOutput] = useState('')
@@ -22,6 +24,7 @@ function App() {
 
   const handleTranslate = async () => {
     setIsLoading(true);
+    trackEvent('translate', 'interaction', 'text_input');
     try {
       console.log('Making translation request...');
       const requestBody = { text: input };
@@ -89,11 +92,17 @@ function App() {
             {isLoading ? 'Translating...' : 'Translate'}
           </Button>
           {output && (
-            <Textarea
-              value={output}
-              readOnly
-              className="min-h-[100px] dark:bg-gray-700 dark:text-gray-100"
-            />
+            <>
+              <Textarea
+                value={output}
+                readOnly
+                className="min-h-[100px] dark:bg-gray-700 dark:text-gray-100"
+              />
+              <ShareButtons
+                text={`${output}\n\nCreated with 漢字-English Blend ✨\nTry it yourself: ${window.location.href}\n#漢字English #KanjiEnglish`}
+                url={window.location.href}
+              />
+            </>
           )}
         </CardContent>
         <div className="text-center p-4 text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700">
