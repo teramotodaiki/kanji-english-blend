@@ -7,24 +7,24 @@ function App() {
   const [output, setOutput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
+  const cleanOutput = (text: string) => {
+    let result = text;
+    
+    // Remove hiragana characters
+    result = result.replace(/[\u3040-\u309F]/g, '');
+    // Remove katakana characters
+    result = result.replace(/[\u30A0-\u30FF]/g, '');
+    // Clean up multiple spaces and line breaks
+    result = result.replace(/\s+/g, ' ').trim();
+    
+    return result;
+  };
+
   const handleTranslate = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       console.log('Making translation request...');
-      // Helper function to ensure output contains only kanji and English characters
-      const cleanOutput = (text: string) => {
-        let result = text;
-        
-        // Remove hiragana characters
-        result = result.replace(/[\u3040-\u309F]/g, '');
-        // Remove katakana characters
-        result = result.replace(/[\u30A0-\u30FF]/g, '');
-        // Clean up multiple spaces and line breaks
-        result = result.replace(/\s+/g, ' ').trim();
-        
-        return result;
-      };
-
+      
       const response = await fetch('/api/translate', {
         method: 'POST',
         headers: {
@@ -45,17 +45,13 @@ function App() {
       // Apply the conversion to ensure only kanji and English characters
       const cleanedOutput = cleanOutput(data.translated_text);
       setOutput(cleanedOutput);
-      } catch (error) {
-        console.error('Error processing response:', error);
-        throw error;
-      }
     } catch (error) {
-      console.error('Translation error:', error)
-      setOutput('Error occurred during translation. Please try again.')
+      console.error('Translation error:', error);
+      setOutput('Error occurred during translation. Please try again.');
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4">
