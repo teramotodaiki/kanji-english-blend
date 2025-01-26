@@ -40,7 +40,15 @@ function App() {
       }
 
       const data = await response.json();
+      
+      if (response.status === 401 || (data.error && data.error.includes('Authentication Fails'))) {
+        throw new Error('API authentication failed. Please try again later.');
+      }
+      
       if (!data.translated_text) {
+        if (data.error) {
+          throw new Error(`API Error: ${data.error}`);
+        }
         throw new Error('Invalid response format from API');
       }
 
