@@ -29,6 +29,13 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
   }
 
   try {
+    console.log('Function environment check:', {
+      hasApiKey: !!env.DEEPSEEK_API_KEY,
+      keyLength: env.DEEPSEEK_API_KEY?.length || 0,
+      keyFormat: env.DEEPSEEK_API_KEY?.startsWith('sk-') || false,
+      keyPrefix: env.DEEPSEEK_API_KEY?.substring(0, 10) + '...' || 'undefined'
+    });
+
     if (request.method !== 'POST') {
       return new Response('Method not allowed', { status: 405 })
     }
@@ -97,12 +104,27 @@ CORE REQUIREMENTS:
       })
     })
 
+    console.log('DeepSeek API response status:', response.status);
+    
     if (!response.ok) {
-      throw new Error(`DeepSeek API error: ${response.status}`)
+      const errorBody = await response.text();
+      console.error('DeepSeek API error details:', {
+        status: response.status,
+        statusText: response.statusText,
+        body: errorBody
+      });
+      throw new Error(`DeepSeek API error: ${response.status} - ${errorBody}`);
     }
 
-    const data = await response.json() as DeepSeekResponse
-    const translatedText = data.choices[0].message.content
+    const data = await response.json() as DeepSeekResponse;
+    console.log('DeepSeek API response data:', data);
+    
+    if (!data.choices?.[0]?.message?.content) {
+      console.error('Invalid DeepSeek API response format:', data);
+      throw new Error('Invalid response format from DeepSeek API');
+    }
+    
+    const translatedText = data.choices[0].message.content;
 
     // Return the response with CORS headers
     return new Response(JSON.stringify({ translated_text: translatedText }), {
