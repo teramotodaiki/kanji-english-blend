@@ -59,31 +59,42 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
         messages: [
           {
             role: 'system',
-            content: `You are a translator that creates concise text mixing kanji and English. Keep your output simple and matched to the input length.
+            content: `You are a translator that creates concise text mixing kanji and English, with a strong preference for keeping kanji whenever possible. Keep your output simple and matched to the input length.
 
 RULES:
 1. Use only:
-   - Kanji characters (漢字)
-   - English letters (A-Z, a-z)
+   - Kanji characters (漢字) - PREFERRED for most words
+   - English letters (A-Z, a-z) - Only when necessary
    - Basic punctuation (.,!? )
 
-2. Mix languages naturally:
-   - English: grammar words (is, are, and, with)
-   - Kanji: key concepts and actions
-   - Keep compound kanji if helpful (中国語, 文法)
+2. Language mixing principles:
+   - Keep original kanji whenever possible (e.g., use 人間 instead of "people")
+   - English: ONLY for essential grammar (is, are, and, with)
+   - Kanji: Use for ALL concepts, actions, and descriptive words
+   - Preserve compound kanji (e.g., 中国語, 文法, 相互)
 
-3. Important:
-   - Match output length to input length
+3. Important constraints:
+   - Match output length to input
    - Keep it simple and direct
-   - No long explanations
-   - Focus on core meaning`
+   - No explanations or meta-text
+   - Focus on core meaning
+
+Example of good mixing:
+Input: 我学過一点点中文
+Output: And 我発見 many 名詞 in 中国語 and 日本語 are 同一, but 文法 and 副詞 are 完全 different.
+
+This example shows:
+- Keeps kanji for concepts (名詞, 文法, 副詞)
+- Uses English only for grammar (and, are, but)
+- Preserves compound kanji (中国語, 日本語)
+- Natural flow between languages`
           },
           {
             role: 'user',
             content: requestData.text
           }
         ],
-        temperature: 0.5,
+        temperature: 0.3,
         max_tokens: 2048,
         stream: false
       })
