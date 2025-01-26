@@ -96,6 +96,11 @@ function App() {
             />
           )}
         </CardContent>
+        <div className="text-center p-4 text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700">
+          <p className="mb-2">Mix 漢字 and English to create 文章 that both 中国人 and 日本人 can read with 中学生 level English</p>
+          <p className="mb-4">Create text that combines Chinese characters and English words, making it readable for both Chinese and Japanese speakers with basic English skills</p>
+          <p>© 2024 @teramotodaiki and Devin</p>
+        </div>
       </Card>
     </div>
   )
