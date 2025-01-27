@@ -92,26 +92,12 @@ function App() {
             className="min-h-[100px] dark:bg-gray-700 dark:text-gray-100"
           />
           <div className="space-y-2">
-            <ul className="flex justify-center space-x-6 text-sm text-gray-500 dark:text-gray-400">
-              <li className="flex items-center space-x-1">
-                <span>➊</span>
-                <span>入力して</span>
-              </li>
-              <li className="flex items-center space-x-1">
-                <span>➋</span>
-                <span>翻訳</span>
-              </li>
-              <li className="flex items-center space-x-1">
-                <span>➌</span>
-                <span>シェア</span>
-              </li>
-            </ul>
             <Button 
               onClick={handleTranslate}
               disabled={isLoading || !input}
               className="w-full dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
             >
-              {isLoading ? 'Translating...' : 'Translate'}
+              {isLoading ? '🔄...' : '🔄'}
             </Button>
           </div>
           {output && (
