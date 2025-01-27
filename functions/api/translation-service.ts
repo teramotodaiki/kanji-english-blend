@@ -105,6 +105,22 @@ ABSOLUTE REQUIREMENTS:
 4. Use English for grammar/connection
 5. Maintain natural flow
 
+CROSS-LANGUAGE READABILITY:
+1. FORMAL STYLE:
+   - Use traditional/formal kanji forms shared between Chinese and Japanese
+   - Prefer classical expressions over modern variants
+   - Maintain formal tone throughout translation
+
+2. SHARED VOCABULARY:
+   - For pronouns, use formal literary forms
+   - For loanwords, use standard Sino-Japanese compounds
+   - Choose kanji compounds recognized in both writing systems
+
+3. BALANCE:
+   - Ensure natural flow in both Chinese and Japanese reading
+   - Maintain consistent formality level
+   - Preserve meaning while using shared character forms
+
 Temperature: 0.3 (strict adherence to rules)`
           },
           {

@@ -68,6 +68,12 @@
       "input": "日本人と中国人が簡単な英語と漢字で交流できます。",
       "expected_patterns": ["日本人", "中国人", "簡単", "英語", "漢字", "交流", "可能"],
       "required_english_patterns": ["and", "with"]
+    },
+    {
+      "description": "Daily routine with formal shared kanji",
+      "input": "私は毎日コーヒーを飲みます。朝はパンも食べます。",
+      "expected_patterns": ["我", "咖啡", "毎日", "食"],
+      "required_english_patterns": ["and", "morning"]
     }
   ]
 }
