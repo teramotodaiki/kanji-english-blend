@@ -110,7 +110,27 @@ function App() {
                 />
                 <div className="flex gap-2 items-center">
                   <CopyButton text={output} />
-                      <ShareButtons
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      trackEvent('feedback', 'user_input', 'good', { input, output });
+                      alert('ありがとうございます。評価を送信しました！');
+                    }}
+                  >
+                    👍 Good
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      trackEvent('feedback', 'user_input', 'bad', { input, output });
+                      alert('フィードバックをありがとうございます。');
+                    }}
+                  >
+                    👎 Bad
+                  </Button>
+                  <ShareButtons
                     text={`${output}\n\nCreated with 漢字-English Blend ✨\nTry it yourself: ${window.location.href}\n#漢字English #KanjiEnglish`}
                     url={window.location.href}
                   />
