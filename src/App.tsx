@@ -114,7 +114,7 @@ function App() {
                     variant="outline"
                     size="sm"
                     onClick={() => {
-                      trackEvent('feedback', 'user_input', 'good', { input, output });
+                      trackEvent('feedback', 'user_input', `good: ${input} -> ${output}`);
                       alert('ありがとうございます。評価を送信しました！');
                     }}
                   >
@@ -124,7 +124,7 @@ function App() {
                     variant="outline"
                     size="sm"
                     onClick={() => {
-                      trackEvent('feedback', 'user_input', 'bad', { input, output });
+                      trackEvent('feedback', 'user_input', `bad: ${input} -> ${output}`);
                       alert('フィードバックをありがとうございます。');
                     }}
                   >
