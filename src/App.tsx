@@ -10,6 +10,7 @@ function App() {
   const [input, setInput] = useState('')
   const [output, setOutput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [showAnimation, setShowAnimation] = useState(false)
 
   const cleanOutput = (text: string) => {
     let result = text;
@@ -61,6 +62,8 @@ function App() {
       // Apply the conversion to ensure only kanji and English characters
       const cleanedOutput = cleanOutput(data.translated_text);
       setOutput(cleanedOutput);
+      setShowAnimation(true);
+      setTimeout(() => setShowAnimation(false), 1000);
     } catch (error) {
       console.error('Translation error:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
@@ -102,7 +105,7 @@ function App() {
           </div>
           {output && (
             <>
-              <div className="space-y-2">
+              <div className={`space-y-2 ${showAnimation ? 'animate-bounce' : ''}`}>
                 <Textarea
                   value={output}
                   readOnly
@@ -111,7 +114,7 @@ function App() {
                 <div className="flex gap-2 items-center">
                   <CopyButton text={output} />
                       <ShareButtons
-                    text={`${output}\n\nCreated with 漢字-English Blend ✨\nTry it yourself: ${window.location.href}\n#漢字English #KanjiEnglish`}
+                    text={`${output}\n\nCreated with 漢字-English Blend ✨\n#漢字English #KanjiEnglish`}
                     url={window.location.href}
                   />
                 </div>

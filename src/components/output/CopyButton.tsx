@@ -23,10 +23,10 @@ export function CopyButton({ text }: CopyButtonProps) {
 
   return (
     <Button
-      variant="outline"
-      size="sm"
+      variant="default"
+      size="lg"
       onClick={handleCopy}
-      className="gap-2"
+      className="gap-2 px-6 py-2 font-semibold"
     >
       {copied ? (
         <>
