@@ -124,7 +124,12 @@ function App() {
             <span>🔄</span>
             <span className="text-sm">Try the samples above!</span>
           </div>
-          <p>© 2024 @teramotodaiki and Devin</p>
+          <p className="mb-2">© 2024 @teramotodaiki and Devin</p>
+          <p className="text-xs">
+            <a href="https://github.com/teramotodaiki/kanji-english-blend" className="underline hover:text-gray-700">GitHubリポジトリ</a>
+            {" "}| Powered by{" "}
+            <a href="https://deepseek.ai" className="underline hover:text-gray-700">DeepSeek R1</a>
+          </p>
         </div>
       </Card>
     </div>
