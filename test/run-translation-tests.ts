@@ -9,6 +9,7 @@ interface TestCase {
   description: string;
   input: string;
   expected_patterns: string[];
+  required_english_patterns?: string[];
 }
 
 interface TestMetadata {
@@ -16,6 +17,14 @@ interface TestMetadata {
   rules: {
     forbidden_chars: string[];
     required_elements: string[];
+    scoring: {
+      threshold: number;
+      points: {
+        forbidden_chars: number;
+        required_kanji: number;
+        required_english: number;
+      };
+    };
   };
 }
 
@@ -30,10 +39,15 @@ async function runTests() {
     readFileSync(join(__dirname, 'translation-test-cases.json'), 'utf-8')
   );
 
-  // Load API key from environment
-  const apiKey = process.env.DEEPSEEK_API_KEY;
-  if (!apiKey) {
+  // Load API keys from environment
+  const deepseekApiKey = process.env.DEEPSEEK_API_KEY;
+  const openaiApiKey = process.env.OPENAI_API_KEY;
+  if (!deepseekApiKey) {
     console.error('❌ DEEPSEEK_API_KEY environment variable is not set');
+    process.exit(1);
+  }
+  if (!openaiApiKey) {
+    console.error('❌ OPENAI_API_KEY environment variable is not set');
     process.exit(1);
   }
 
@@ -46,7 +60,7 @@ async function runTests() {
     console.log(`Input: ${testCase.input}`);
 
     try {
-      const result = await translateText(testCase.input, apiKey);
+      const result = await translateText(testCase.input, deepseekApiKey, openaiApiKey);
       
       if (result.error) {
         console.log(`❌ Error: ${result.error}`);
