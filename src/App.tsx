@@ -6,11 +6,11 @@ import { ShareButtons } from "@/components/share/ShareButtons"
 import { SampleTexts } from "@/components/sample/SampleTexts"
 import { CopyButton } from "@/components/output/CopyButton"
 import { trackEvent } from "@/lib/analytics"
+import confetti from 'canvas-confetti'
 function App() {
   const [input, setInput] = useState('')
   const [output, setOutput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [showAnimation, setShowAnimation] = useState(false)
 
   const cleanOutput = (text: string) => {
     let result = text;
@@ -62,8 +62,12 @@ function App() {
       // Apply the conversion to ensure only kanji and English characters
       const cleanedOutput = cleanOutput(data.translated_text);
       setOutput(cleanedOutput);
-      setShowAnimation(true);
-      setTimeout(() => setShowAnimation(false), 1000);
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#FF1A75', '#FFC914', '#1E88E5']
+      });
     } catch (error) {
       console.error('Translation error:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
@@ -105,7 +109,7 @@ function App() {
           </div>
           {output && (
             <>
-              <div className={`space-y-2 ${showAnimation ? 'animate-bounce' : ''}`}>
+              <div className="space-y-2">
                 <Textarea
                   value={output}
                   readOnly
