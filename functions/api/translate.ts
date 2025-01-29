@@ -3,6 +3,7 @@ import { translateText, TranslationRequest } from './translation-service'
 
 interface Env {
   DEEPSEEK_API_KEY: string;
+  OPENAI_API_KEY: string;
 }
 
 export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
@@ -37,7 +38,7 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
       })
     }
 
-    const result = await translateText(requestData.text, env.DEEPSEEK_API_KEY);
+    const result = await translateText(requestData.text, env.DEEPSEEK_API_KEY, env.OPENAI_API_KEY);
     
     if (result.error) {
       return new Response(JSON.stringify({ error: result.error }), {
