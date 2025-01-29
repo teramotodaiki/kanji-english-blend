@@ -9,20 +9,7 @@ export interface TranslationResult {
   error?: string;
 }
 
-export async function translateText(text: string, apiKey: string): Promise<TranslationResult> {
-  try {
-    const response = await fetch('https://api.deepseek.com/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'deepseek-chat',
-        messages: [
-          {
-            role: 'system',
-            content: `You are a translator creating text using ONLY kanji and English letters, with ZERO tolerance for hiragana or katakana. Your translations must be precise and follow these absolute rules:
+const TRANSLATION_SYSTEM_PROMPT = `You are a translator creating text using ONLY kanji and English letters, with ZERO tolerance for hiragana or katakana. Your translations must be precise and follow these absolute rules:
 
 CRITICAL CHARACTER RESTRICTIONS:
 1. ALLOWED CHARACTERS (STRICT):
@@ -131,7 +118,22 @@ CROSS-LANGUAGE READABILITY:
    - Keep consistent formal register throughout
    - Preserve meaning while using shared character forms
 
-Temperature: 0.3 (strict adherence to rules)`
+Temperature: 0.3 (strict adherence to rules)`;
+
+export async function translateText(text: string, deepseekApiKey: string, openaiApiKey: string): Promise<TranslationResult> {
+  try {
+    const response = await fetch('https://api.deepseek.com/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${deepseekApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'deepseek-chat',
+        messages: [
+          {
+            role: 'system',
+            content: TRANSLATION_SYSTEM_PROMPT
           },
           {
             role: 'user',
@@ -157,7 +159,49 @@ Temperature: 0.3 (strict adherence to rules)`
     
     return { translated_text: data.choices[0].message.content };
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    return { translated_text: '', error: errorMessage };
+    // If DeepSeek fails, try GPT-4
+    try {
+      const gptResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${openaiApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'gpt-4o',
+          messages: [
+            {
+              role: 'system',
+              content: TRANSLATION_SYSTEM_PROMPT
+            },
+            { role: 'user', content: text }
+          ],
+          temperature: 0.3,
+          max_tokens: 2048,
+          stream: false
+        })
+      });
+
+      if (!gptResponse.ok) {
+        const gptErrorBody = await gptResponse.text();
+        throw new Error(`GPT-4 API error: ${gptResponse.status} - ${gptErrorBody}`);
+      }
+
+      const gptData = await gptResponse.json() as {
+        choices?: Array<{
+          message?: {
+            content?: string;
+          };
+        }>;
+      };
+      if (!gptData.choices?.[0]?.message?.content) {
+        throw new Error('Invalid response format from GPT-4 API');
+      }
+
+      return { translated_text: gptData.choices[0].message.content };
+    } catch (gptError) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      return { translated_text: '', error: `DeepSeek failed (${errorMessage}), GPT-4 fallback also failed: ${gptError instanceof Error ? gptError.message : 'Unknown error'}` };
+    }
   }
 }
