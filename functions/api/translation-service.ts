@@ -159,6 +159,7 @@ export async function translateText(text: string, deepseekApiKey: string, openai
     
     return { translated_text: data.choices[0].message.content };
   } catch (error) {
+    console.error(error);
     // If DeepSeek fails, try GPT-4
     try {
       const gptResponse = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -200,6 +201,7 @@ export async function translateText(text: string, deepseekApiKey: string, openai
 
       return { translated_text: gptData.choices[0].message.content };
     } catch (gptError) {
+      console.error(gptError);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       return { translated_text: '', error: `DeepSeek failed (${errorMessage}), GPT-4 fallback also failed: ${gptError instanceof Error ? gptError.message : 'Unknown error'}` };
     }
