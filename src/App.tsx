@@ -6,10 +6,13 @@ import { ShareButtons } from "@/components/share/ShareButtons"
 import { SampleTexts } from "@/components/sample/SampleTexts"
 import { CopyButton } from "@/components/output/CopyButton"
 import { trackEvent } from "@/lib/analytics"
+import { Toaster } from "@/components/ui/toaster"
+import { useToast } from "@/hooks/use-toast"
 function App() {
   const [input, setInput] = useState('')
   const [output, setOutput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const { toast } = useToast()
 
   const cleanOutput = (text: string) => {
     let result = text;
@@ -71,7 +74,8 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 py-8 px-4">
+    <>
+      <div className="min-h-screen bg-white dark:bg-gray-900 py-8 px-4">
       <Card className="max-w-2xl mx-auto shadow-lg dark:bg-gray-800">
         <CardHeader className="space-y-2">
           <CardTitle className="text-2xl font-bold dark:text-white">漢字-English Blend</CardTitle>
@@ -110,7 +114,33 @@ function App() {
                 />
                 <div className="flex gap-2 items-center">
                   <CopyButton text={output} />
-                      <ShareButtons
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      trackEvent('feedback', 'user_input', `good: ${input} -> ${output}`);
+                      toast({
+                        description: 'ありがとうございます。評価を送信しました！',
+                        duration: 3000
+                      });
+                    }}
+                  >
+                    👍 Good
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      trackEvent('feedback', 'user_input', `bad: ${input} -> ${output}`);
+                      toast({
+                        description: 'フィードバックをありがとうございます。',
+                        duration: 3000
+                      });
+                    }}
+                  >
+                    👎 Bad
+                  </Button>
+                  <ShareButtons
                     text={`${output}\n\nCreated with 漢字-English Blend ✨\nTry it yourself: ${window.location.href}\n#漢字English #KanjiEnglish`}
                     url={window.location.href}
                   />
@@ -133,6 +163,8 @@ function App() {
         </div>
       </Card>
     </div>
+      <Toaster />
+    </>
   )
 }
 
