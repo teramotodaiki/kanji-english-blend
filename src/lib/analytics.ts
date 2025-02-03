@@ -1,6 +1,14 @@
 declare global {
   interface Window {
-    gtag: (...args: any[]) => void;
+    gtag: (
+      command: 'event',
+      action: string,
+      params: {
+        event_category: string;
+        event_label?: string;
+        value?: number;
+      }
+    ) => void;
   }
 }
 

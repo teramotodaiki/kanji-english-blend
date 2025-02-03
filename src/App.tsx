@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import confetti from 'canvas-confetti'
+
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -8,6 +10,7 @@ import { CopyButton } from "@/components/output/CopyButton"
 import { trackEvent } from "@/lib/analytics"
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from "@/hooks/use-toast"
+
 function App() {
   const [input, setInput] = useState('')
   const [output, setOutput] = useState('')
@@ -64,6 +67,12 @@ function App() {
       // Apply the conversion to ensure only kanji and English characters
       const cleanedOutput = cleanOutput(data.translated_text);
       setOutput(cleanedOutput);
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#FF1A75', '#FFC914', '#1E88E5']
+      });
     } catch (error) {
       console.error('Translation error:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
@@ -141,7 +150,7 @@ function App() {
                     👎 Bad
                   </Button>
                   <ShareButtons
-                    text={`${output}\n\nCreated with 漢字-English Blend ✨\nTry it yourself: ${window.location.href}\n#漢字English #KanjiEnglish`}
+                    text={`${output}\n\nCreated with 漢字-English Blend ✨\n#漢字English #KanjiEnglish`}
                     url={window.location.href}
                   />
                 </div>
